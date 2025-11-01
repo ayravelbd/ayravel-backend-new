@@ -21,7 +21,6 @@ app.use(cors({
     "https://admin.ayravel.com",
     "http://localhost:3001",
     "http://localhost:3003",
-
   ],
   credentials: true
 }));

@@ -12,6 +12,6 @@ export type TCategory = {
   icon?: TIcon;
   image: string;
   bannerImg: string;
-  subCategories?: Types.ObjectId[];
+  subCategories?: string[];
   deletedImages?: string[];
 };

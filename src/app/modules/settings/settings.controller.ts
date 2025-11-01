@@ -16,12 +16,40 @@ const createSettings = catchAsync(async (req, res) => {
     ? files["popupImage"][0].path
     : undefined;
 
-  const settingsData = {
+  const settingsData: any = {
     ...req.body,
     logo,
     sliderImages,
     popupImage,
   };
+
+  // ✅ Handle MFS logos
+  settingsData.mobileMfs = settingsData.mobileMfs || {};
+
+  if (files?.bKashLogo?.length) {
+    settingsData.mobileMfs.bKash = {
+      ...(settingsData.mobileMfs.bKash || {}),
+      bKashLogo: files.bKashLogo[0].path,
+    };
+  }
+  if (files?.nagadLogo?.length) {
+    settingsData.mobileMfs.nagad = {
+      ...(settingsData.mobileMfs.nagad || {}),
+      nagadLogo: files.nagadLogo[0].path,
+    };
+  }
+  if (files?.rocketLogo?.length) {
+    settingsData.mobileMfs.rocket = {
+      ...(settingsData.mobileMfs.rocket || {}),
+      rocketLogo: files.rocketLogo[0].path,
+    };
+  }
+  if (files?.upayLogo?.length) {
+    settingsData.mobileMfs.upay = {
+      ...(settingsData.mobileMfs.upay || {}),
+      upayLogo: files.upayLogo[0].path,
+    };
+  }
 
   const result = await settingsServices.createSettingsOnDB(settingsData);
 
