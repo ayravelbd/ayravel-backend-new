@@ -77,6 +77,10 @@ const settingsSchema = new Schema<TSettings>(
       youtubeUrl: { type: [String] },
       whatsappLink: { type: [String] },
     },
+    facebookPixel: {
+      isEnabled: { type: Boolean, default: false },
+      pixelId: { type: String, default: "" },
+    },
   },
   { timestamps: true }
 );

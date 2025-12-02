@@ -436,7 +436,18 @@ const resetPasswordWithOtp = async (
 /**
  * 🔹 Reset password when logged in (no OTP)
  */
-const resetPasswordLoggedIn = async (userId: string, newPassword: string) => {
+const resetPasswordLoggedIn = async (userId: string, oldPassword: string, newPassword: string) => {
+  const user = await UserModel.findById(userId);
+  if (!user || !user.password) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  const isPasswordMatched = await bcrypt.compare(oldPassword, user.password);
+  if (!isPasswordMatched) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "Old password is incorrect");
+  }
+
+  
   const hash = await bcrypt.hash(newPassword, 10);
   await UserModel.updateOne(
     { _id: userId },

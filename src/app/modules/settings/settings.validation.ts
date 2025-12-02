@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { fa } from "zod/v4/locales/index.cjs";
 
 export const createSettingsValidationSchema = z.object({
   body: z.object({
@@ -55,6 +56,12 @@ export const createSettingsValidationSchema = z.object({
         facebookUrl: z.string().optional(),
         instagramUrl: z.string().optional(),
         whatsappLink: z.string().optional(),
+      })
+      .optional(),
+    facebookPixel: z
+      .object({
+        isEnabled: z.boolean().optional(),
+        pixelId: z.string().optional(),
       })
       .optional(),
   }),
