@@ -56,5 +56,9 @@ const settingsSchema = new mongoose_1.Schema({
         youtubeUrl: { type: [String] },
         whatsappLink: { type: [String] },
     },
+    facebookPixel: {
+        isEnabled: { type: Boolean, default: false },
+        pixelId: { type: String, default: "" },
+    },
 }, { timestamps: true });
 exports.SettingsModel = (0, mongoose_1.model)("Settings", settingsSchema);

@@ -59,5 +59,11 @@ exports.createSettingsValidationSchema = zod_1.z.object({
             whatsappLink: zod_1.z.string().optional(),
         })
             .optional(),
+        facebookPixel: zod_1.z
+            .object({
+            isEnabled: zod_1.z.boolean().optional(),
+            pixelId: zod_1.z.string().optional(),
+        })
+            .optional(),
     }),
 });

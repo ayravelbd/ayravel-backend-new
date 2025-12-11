@@ -347,10 +347,9 @@ const resetPasswordWithOtp = (0, catchAsync_1.default)((req, res) => __awaiter(v
  * 🔹 Reset Password (logged in)
  */
 const resetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a._id;
-    const { newPassword } = req.body;
-    if (!userId) {
+    const { data } = req.body;
+    console.log(data);
+    if (!data.userId) {
         return (0, sendResponse_1.default)(res, {
             success: false,
             statusCode: http_status_codes_1.StatusCodes.UNAUTHORIZED,
@@ -358,7 +357,7 @@ const resetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
             data: null,
         });
     }
-    const result = yield auth_service_1.AuthServices.resetPasswordLoggedIn(userId, newPassword);
+    const result = yield auth_service_1.AuthServices.resetPasswordLoggedIn(data.userId, data.oldPassword, data.newPassword);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_codes_1.StatusCodes.OK,
