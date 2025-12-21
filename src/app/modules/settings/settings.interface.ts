@@ -55,4 +55,8 @@ export type TSettings = {
     youtubeUrl?: string[];
     whatsappLink?: string[];
   };
+  facebookPixel?: {
+    isEnabled: boolean;
+    pixelId: string;
+  };
 };

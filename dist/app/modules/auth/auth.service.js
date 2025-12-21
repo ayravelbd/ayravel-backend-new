@@ -317,7 +317,15 @@ const resetPasswordWithOtp = (email, otp, newPassword) => __awaiter(void 0, void
 /**
  * 🔹 Reset password when logged in (no OTP)
  */
-const resetPasswordLoggedIn = (userId, newPassword) => __awaiter(void 0, void 0, void 0, function* () {
+const resetPasswordLoggedIn = (userId, oldPassword, newPassword) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.UserModel.findById(userId);
+    if (!user || !user.password) {
+        throw new handleAppError_1.default(http_status_1.default.NOT_FOUND, "User not found");
+    }
+    const isPasswordMatched = yield bcrypt_1.default.compare(oldPassword, user.password);
+    if (!isPasswordMatched) {
+        throw new handleAppError_1.default(http_status_1.default.UNAUTHORIZED, "Old password is incorrect");
+    }
     const hash = yield bcrypt_1.default.hash(newPassword, 10);
     yield user_model_1.UserModel.updateOne({ _id: userId }, { password: hash, tokenVersion: Date.now() });
     return { message: "Password updated successfully!" };

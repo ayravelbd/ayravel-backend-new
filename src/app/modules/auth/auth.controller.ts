@@ -402,10 +402,11 @@ const resetPasswordWithOtp = catchAsync(async (req, res) => {
  * 🔹 Reset Password (logged in)
  */
 const resetPassword = catchAsync(async (req, res) => {
-  const userId = (req.user as TUser)?._id;
-  const { newPassword } = req.body;
+  
+  const { data } = req.body;
+console.log(data);
 
-  if (!userId) {
+  if (!data.userId) {
     return sendResponse(res, {
       success: false,
       statusCode: StatusCodes.UNAUTHORIZED,
@@ -414,7 +415,11 @@ const resetPassword = catchAsync(async (req, res) => {
     });
   }
 
-  const result = await AuthServices.resetPasswordLoggedIn(userId, newPassword);
+  const result = await AuthServices.resetPasswordLoggedIn(
+    data.userId,
+    data.oldPassword,
+    data.newPassword
+  );
 
   sendResponse(res, {
     success: true,
